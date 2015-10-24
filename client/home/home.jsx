@@ -25,12 +25,12 @@ class Landing extends React.Component{
                   <p>Login</p>
                   <input type="text" ref="loginUsername" className="form-control" placeholder="username"/>
                   <input type="password" ref="loginPassword" className="form-control" placeholder="password"/>
-                  <input type="submit" className="btn btn-lg" value="Login"/>
+                  <input type="submit" className="btn btn-lg" value="Login"/><br/>
+                  <a href="#" onClick={() => {
+                      console.log('PRESS');
+                      this.setState({register: true, login: false})
+                    }}>Register</a>
                 </form>
-                <a href="#" onClick={() => {
-                    console.log('PRESS');
-                    this.setState({register: true, login: false})
-                  }}>Register</a>
                 </div>
     }
     if (this.state.register) {
@@ -60,12 +60,13 @@ class Landing extends React.Component{
                   <input type="text" ref='registerUsername' className="form-control" placeholder="username"/>
                   <input type="text" ref='registerCode' className="form-control" placeholder="code"/>
                   <input type="password" ref='registerPassword' className="form-control" placeholder="password"/>
-                  <input type="submit" className="btn btn-lg" value="Signup"/>
+                  <input type="submit" className="btn btn-lg" value="Signup"/><br/>
+                    <a href="#" onClick={() => {
+                        console.log('PRESS');
+                        this.setState({register: false, login: true})
+                      }}>Login</a>
                 </form>
-                <a href="#" onClick={() => {
-                    console.log('PRESS');
-                    this.setState({register: false, login: true})
-                  }}>Login</a></div>
+                </div>
     }
     return (
       <div>

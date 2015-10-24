@@ -1,0 +1,121 @@
+$red: #D50000;
+$mediumRed: #C62828;
+$lightRed: #F44336;
+$darkPurple: #880E4F;
+$purple: #AD1457;
+$lightPurple: #D81B60;
+$deepPurple: #311B92;
+
+.logout {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  font-size: 20px;
+  color: white;
+}
+#main {
+  margin: 0;
+  padding: 0;
+  width: inherit;
+  position: 'relative';
+}
+.container {
+  margin: 0;
+  padding: 0;
+  width: inherit;
+}
+.login {
+  padding: 20px;
+  flex: 1;
+  flex-direction: 'column';
+  justify-content: center;
+  p {
+    font-size: 20px;
+  }
+}
+.form-control {
+  width: 50%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.signup {
+  padding: 20px;
+  flex: 1;
+  flex-direction: 'column';
+  justify-content: center;
+
+  p {
+    font-size: 20px;
+  }
+
+}
+.btn.btn-lg {
+
+}
+.landing-content {
+
+}
+.mainTitle {
+  background: $red;
+  padding: 20px;
+  p {
+    color: white;
+    text-align: center;
+    font-size: 30px;
+  }
+}
+.title {
+
+}
+p {
+
+}
+.option-bar {
+  background: $purple;
+  padding: 10px;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  align-items: space-between;
+  justify-content: center;
+  i {
+    color: white;
+    width: 25%;
+    text-align: center;
+    font-size: 60px;
+  }
+}
+.mdi-account-box {
+  font-size: 100px;
+  color: $deepPurple;
+}
+.messages-page {
+  height: inherit;
+}
+.message-holder {
+  display: flex;
+}
+.message-bubble {
+  background: white;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 6px;
+}
+
+.messages {
+  background: #f7f7f7;
+  flex: 1;
+  flex-direction: column;
+  align-items: stretch;
+  position: absolute;
+  top: 200px;
+  height: 430px;
+  overflow-y: auto;
+  width: 100%;
+}
+.messages-form {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
