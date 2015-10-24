@@ -1,6 +1,9 @@
 <template name="layout">
   <div class="container">
     <div id="main">
+      {{# if userLoggedIn }}
+        <a href="#" class='logout'>Logout</a>
+      {{/if}}
       {{> yield }}
     </div>
   </div>

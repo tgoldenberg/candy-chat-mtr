@@ -20,6 +20,7 @@ class Landing extends React.Component{
                       if (err)
                         return throwError(err);
                     });
+                    Router.go('chat');
                   }}>
                   <p>Login</p>
                   <input type="text" ref="loginUsername" className="form-control" placeholder="username"/>
@@ -53,6 +54,7 @@ class Landing extends React.Component{
                         console.log('ERROR', err);
                       }
                     });
+                    Router.go('chat')
                   }}>
                   <p>Signup</p>
                   <input type="text" ref='registerUsername' className="form-control" placeholder="username"/>
@@ -68,7 +70,6 @@ class Landing extends React.Component{
     return (
       <div>
         <div className="landing-content">
-          <a href="#" onClick={() => {Meteor.logout();}}>Logout</a>
           <div className="mainTitle">
             <p className="title">Candy Chat</p>
           </div>
