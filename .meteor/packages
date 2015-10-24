@@ -18,6 +18,12 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 insecure                # Allow all DB writes from clients (for prototyping)
 accounts-password
-planettraining:material-design-icons
 iron:router
 sacha:spin
+audit-argument-checks
+react
+react-template-helper
+fourseven:scss
+dapearce:material-icons
+twbs:bootstrap
+accounts-ui
