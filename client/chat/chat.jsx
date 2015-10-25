@@ -1,4 +1,10 @@
 class Chat extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      type: 'MESSAGE',
+    }
+  }
   componentDidMount(){
     this.scrollDown();
   }
@@ -6,7 +12,6 @@ class Chat extends React.Component{
     let scrollHeight = React.findDOMNode(this.refs.messagesHolder).scrollHeight;
     $(React.findDOMNode(this.refs.messagesHolder)).scrollTop(scrollHeight);
   }
-
   render(){
     return (
       <div className="messages-page">
@@ -16,7 +21,7 @@ class Chat extends React.Component{
         <div className="option-bar">
           <i className="mdi mdi-camera"></i>
           <i className="mdi mdi-camcorder"></i>
-          <i className="mdi mdi-comment"></i>
+          <i className="mdi mdi-comment-text"></i>
           <i className="mdi mdi-emoticon-happy"></i>
         </div>
         <div className="messages" ref="messagesHolder">
@@ -38,7 +43,6 @@ class Chat extends React.Component{
             )
           })}
         </div>
-
         <form className="messages-form" onSubmit={(e) => {
             e.preventDefault();
             let username = Meteor.user().username;
@@ -62,7 +66,7 @@ class Chat extends React.Component{
             }
           }}>
           <input type="text" ref='message' className='form-control' placeholder='message'/>
-          <input type="submit" className='btn btn-lg' value='Send'/>
+          <input type="submit" className='btn btn-lg' value='SEND'/>
         </form>
       </div>
     )
