@@ -2,8 +2,8 @@ class Landing extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      register: true,
-      login: false,
+      register: false,
+      login: true,
     }
   }
   render() {
@@ -20,7 +20,6 @@ class Landing extends React.Component{
                       if (err)
                         return throwError(err);
                     });
-                    Router.go('chat');
                   }}>
                   <p>Login</p>
                   <input type="text" ref="loginUsername" className="form-control" placeholder="username"/>
@@ -81,6 +80,11 @@ class Landing extends React.Component{
     );
   }
 };
+Tracker.autorun(function() {
+  if (Meteor.userId()) {
+    Router.go('/chat');
+  }
+});
 
 Template.home.helpers({
   Landing: function() {

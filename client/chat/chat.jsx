@@ -1,4 +1,7 @@
 class Chat extends React.Component{
+  scrollDown(){
+
+  }
   render(){
     return (
       <div className="messages-page">
@@ -17,9 +20,14 @@ class Chat extends React.Component{
               <div className='message-holder' key={idx}>
                 <i className="mdi mdi-account-box"></i>
                 <div className="message-content">
-                  <p className='message-bubble'>{message.message}</p>
-                  <p>by {message.author}</p>
-                  <p>sent on {message.createdAt.toLocaleDateString()}</p>
+                  <div className='message-bubble'>
+                    <p>
+                      {message.message}
+                    </p>
+                  </div>
+                  <br/>
+                  <p className="message-details">by {message.author}</p>
+                  <p className="message-details">sent on {message.createdAt.toLocaleDateString()}</p>
                 </div>
               </div>
             )
@@ -30,12 +38,14 @@ class Chat extends React.Component{
             e.preventDefault();
             let username = Meteor.user().username;
             let message = React.findDOMNode(this.refs.message).value;
+            React.findDOMNode(this.refs.message).value = '';
             let options = {
               author: username,
               message: message,
               createdAt: new Date()
             }
-            Meteor.call('messageCreate', options);
+            if (message.length)
+              Meteor.call('messageCreate', options);
           }}>
           <input type="text" ref='message' className='form-control' placeholder='message'/>
           <input type="submit" className='btn btn-lg' value='Send'/>
