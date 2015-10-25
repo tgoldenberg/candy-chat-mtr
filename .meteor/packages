@@ -29,3 +29,8 @@ twbs:bootstrap
 accounts-ui
 check
 copleykj:livestamp
+meteorhacks:npm
+
+
+npm-container
+cosmos:browserify
