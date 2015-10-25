@@ -41,7 +41,7 @@ class Chat extends React.Component{
                     .then((msg) => {
                       console.log('msg', message);
                       this.scrollDown();
-                    })
+                    });
                   }
                 }}>
                 <input type="text" ref='message' className='form-control' placeholder='VIDEO'/>
