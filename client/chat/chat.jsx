@@ -1,7 +1,12 @@
 class Chat extends React.Component{
-  scrollDown(){
-
+  componentDidMount(){
+    this.scrollDown();
   }
+  scrollDown(){
+    let scrollHeight = React.findDOMNode(this.refs.messagesHolder).scrollHeight;
+    $(React.findDOMNode(this.refs.messagesHolder)).scrollTop(scrollHeight);
+  }
+
   render(){
     return (
       <div className="messages-page">
@@ -14,7 +19,7 @@ class Chat extends React.Component{
           <i className="mdi mdi-comment"></i>
           <i className="mdi mdi-emoticon-happy"></i>
         </div>
-        <div className="messages">
+        <div className="messages" ref="messagesHolder">
           {this.props.messages.map((message, idx) => {
             return (
               <div className='message-holder' key={idx}>
@@ -44,8 +49,17 @@ class Chat extends React.Component{
               message: message,
               createdAt: new Date()
             }
-            if (message.length)
-              Meteor.call('messageCreate', options);
+            if (message.length) {
+              let p1 = new Promise((resolve, reject) => {
+                Meteor.call('messageCreate', options, function(msg) {
+                  resolve(msg)
+                });
+              })
+              .then((msg) => {
+                console.log('msg', message);
+                this.scrollDown();
+              })
+            }
           }}>
           <input type="text" ref='message' className='form-control' placeholder='message'/>
           <input type="submit" className='btn btn-lg' value='Send'/>
