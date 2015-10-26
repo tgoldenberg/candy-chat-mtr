@@ -53,6 +53,7 @@ class Chat extends React.Component{
         form = <form className="messages-form" onSubmit={(e) => {
                 e.preventDefault();
                 let author = Meteor.user().username;
+                let imageSource = React.findDOMNode(this.refs.imageSource);
                 let imageUrl = React.findDOMNode(this.refs.imageSource).src;
                 if (imageUrl != "") {
                   let options = {
@@ -64,6 +65,7 @@ class Chat extends React.Component{
                   let p1 = new Promise((resolve, reject) => {
                     Meteor.call('photoCreate', options, function(msg) {
                       resolve(msg)
+                      imageSource.src = '';
                     });
                   })
                   .then((msg) => {
