@@ -52,10 +52,49 @@ class Chat extends React.Component{
       case 'PHOTO':
         form = <form className="messages-form" onSubmit={(e) => {
                 e.preventDefault();
-                let username = Meteor.user().username;
+                let author = Meteor.user().username;
+                let imageUrl = React.findDOMNode(this.refs.imageSource).src;
+                if (imageUrl != "") {
+                  let options = {
+                    imageUrl: imageUrl,
+                    author: author,
+                    type: 'PHOTO',
+                    createdAt: new Date()
+                  };
+                  let p1 = new Promise((resolve, reject) => {
+                    Meteor.call('photoCreate', options, function(msg) {
+                      resolve(msg)
+                    });
+                  })
+                  .then((msg) => {
+                    this.scrollDown();
+                  })
+                  .catch((err) => {
+                    console.log('ERR', err);
+                  })
+                }
                 }}>
 
-              <input type="file"/>
+              <input type="file" ref="imageUploader" onChange={() => {
+                  let files = React.findDOMNode(this.refs.imageUploader).files;
+                  let preview = React.findDOMNode(this.refs.imageSource);
+                  let file = files[0];
+                  console.log('FILE', file);
+                  if ( file == null) {
+                    alert('NO file selected');
+                  } else {
+                    // TODO: upload image to AWS and get URL
+                    AWS.config.update({accessKeyId: Meteor.settings.public.AWS_ACCESS_TOKEN, secretAccessKey: Meteor.settings.public.AWS_SECRET_KEY});
+                    AWS.config.region = 'us-east-1';
+                    var s3 = new AWS.S3({params: {Bucket: 'speakitlanguages'}});
+                    let params = { Key: file.name, ContentType: file.type, Body: file };
+                    s3.upload(params, function(err, data) {
+                      console.log('DATA', data, err);
+                      preview.src = data.Location;
+                    });
+                  }
+                }}/>
+              <img ref="imageSource" className="image-preview" src=""/>
               <input type="submit" className='btn btn-lg' value='SEND'/>
             </form>
       break;
@@ -167,8 +206,10 @@ class Chat extends React.Component{
     }
 
     let content = [];
+    console.log('PHOTOS', this.props.photos);
     this.props.messages.forEach((msg) => { content.push(msg);})
     this.props.emojis.forEach((msg) => { content.push(msg);})
+    this.props.photos.forEach((photo) => { content.push(photo);});
     content = content.sort((a, b) => {
       return a.createdAt > b.createdAt;
     });
@@ -207,6 +248,19 @@ class Chat extends React.Component{
                   })}
                 </p>
               </div>
+              <br/>
+              <p className="message-details">by {row.author}</p>
+              <p className="message-details">sent on {row.createdAt.toLocaleDateString()}</p>
+            </div>
+            <br/>
+          </div>
+        )
+      } else if (row.type == 'PHOTO') {
+        return (
+          <div className='message-holder' key={idx}>
+            <i className="mdi mdi-account-box"></i>
+            <div className="message-content">
+              <img src={row.imageUrl} className="image-preview" />
               <br/>
               <p className="message-details">by {row.author}</p>
               <p className="message-details">sent on {row.createdAt.toLocaleDateString()}</p>
@@ -255,5 +309,8 @@ Template.chat.helpers({
   },
   emojis: function() {
     return Emojis.find().fetch();
+  },
+  photos: function() {
+    return Photos.find().fetch();
   }
 })
