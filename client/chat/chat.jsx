@@ -21,34 +21,6 @@ class Chat extends React.Component{
   render(){
     let form;
     switch(this.state.type) {
-
-      case 'VIDEO':
-        form = <form className="messages-form" onSubmit={(e) => {
-                  e.preventDefault();
-                  let username = Meteor.user().username;
-                  let message = React.findDOMNode(this.refs.message).value;
-                  React.findDOMNode(this.refs.message).value = '';
-                  let options = {
-                    author: username,
-                    message: message,
-                    createdAt: new Date()
-                  }
-                  if (message.length) {
-                    let p1 = new Promise((resolve, reject) => {
-                      Meteor.call('messageCreate', options, function(msg) {
-                        resolve(msg)
-                      });
-                    })
-                    .then((msg) => {
-                      console.log('msg', message);
-                      this.scrollDown();
-                    });
-                  }
-                }}>
-                <input type="text" ref='message' className='form-control' placeholder='VIDEO'/>
-                <input type="submit" className='btn btn-lg' value='SEND'/>
-              </form>
-      break;
       case 'PHOTO':
         form = <form className="messages-form" onSubmit={(e) => {
                 e.preventDefault();
@@ -70,35 +42,40 @@ class Chat extends React.Component{
                   })
                   .then((msg) => {
                     this.scrollDown();
+                    React.findDOMNode(this.refs.uploadButton).innerHTML = 'Upload Image';
                   })
                   .catch((err) => {
                     console.log('ERR', err);
                   })
                 }
                 }}>
-
-              <input type="file" ref="imageUploader" onChange={() => {
-                  let files = React.findDOMNode(this.refs.imageUploader).files;
-                  let preview = React.findDOMNode(this.refs.imageSource);
-                  let file = files[0];
-                  console.log('FILE', file);
-                  if ( file == null) {
-                    alert('NO file selected');
-                  } else {
-                    // TODO: upload image to AWS and get URL
-                    AWS.config.update({accessKeyId: Meteor.settings.public.AWS_ACCESS_TOKEN, secretAccessKey: Meteor.settings.public.AWS_SECRET_KEY});
-                    AWS.config.region = 'us-east-1';
-                    var s3 = new AWS.S3({params: {Bucket: 'speakitlanguages'}});
-                    let params = { Key: file.name, ContentType: file.type, Body: file };
-                    s3.upload(params, function(err, data) {
-                      console.log('DATA', data, err);
-                      preview.src = data.Location;
-                    });
-                  }
-                }}/>
-              <img ref="imageSource" className="image-preview" src=""/>
-              <input type="submit" className='btn btn-lg' value='SEND'/>
-            </form>
+                <label className="custom-file-upload" ref="uploadButton">
+                  <input type="file" id="file" ref="imageUploader" onChange={() => {
+                      let files = React.findDOMNode(this.refs.imageUploader).files;
+                      let preview = React.findDOMNode(this.refs.imageSource);
+                      let button = React.findDOMNode(this.refs.uploadButton);
+                      let file = files[0];
+                      console.log('FILE', file);
+                      if ( file == null) {
+                        alert('NO file selected');
+                      } else {
+                        // TODO: upload image to AWS and get URL
+                        AWS.config.update({accessKeyId: Meteor.settings.public.AWS_ACCESS_TOKEN, secretAccessKey: Meteor.settings.public.AWS_SECRET_KEY});
+                        AWS.config.region = 'us-east-1';
+                        var s3 = new AWS.S3({params: {Bucket: 'speakitlanguages'}});
+                        let params = { Key: file.name, ContentType: file.type, Body: file };
+                        s3.upload(params, function(err, data) {
+                          console.log('DATA', data, err);
+                          preview.src = data.Location;
+                          button.innerHTML = file.name;
+                        });
+                      }
+                    }}/>
+                  Upload Image
+                </label>
+                <img ref="imageSource" className="image-preview" src=""/>
+                <input type="submit" className='btn btn-lg' value='SEND'/>
+              </form>
       break;
       case 'EMOJI':
         form = <form className="messages-form" onSubmit={(e) => {
@@ -262,7 +239,7 @@ class Chat extends React.Component{
           <div className='message-holder' key={idx}>
             <i className="mdi mdi-account-box"></i>
             <div className="message-content">
-              <img src={row.imageUrl} className="image-preview" />
+              <img src={row.imageUrl} className="message-image-preview" />
               <br/>
               <p className="message-details">by {row.author}</p>
               <p className="message-details">sent on {row.createdAt.toLocaleDateString()}</p>

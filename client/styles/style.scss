@@ -27,6 +27,14 @@ $deepPurple: #311B92;
 .image-preview {
   height: 100px;
   width: 100px;
+  border-radius: 2px;
+  margin-top: 5px;
+  margin-right: 80px;
+  margin-left: 80px;
+}
+.message-image-preview {
+  width: 100px;
+  border-radius: 2px;
 }
 .login {
   padding: 20px;
@@ -198,4 +206,20 @@ p {
     margin: 10px;
     font-weight: bold;
   }
+}
+.custom-file-upload {
+  cursor: pointer;
+  background: $purple;
+  border-radius: 4px;
+  font-size: 18px;
+  margin-left: 30px;
+  height: 60px;
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  color: white;
+  margin-top: 20px;
+}
+input[type=file] {
+  display: none;
 }
