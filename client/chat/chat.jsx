@@ -280,9 +280,9 @@ class Chat extends React.Component{
           <i className="mdi mdi-camera" onClick={() => {
               this.setState({type: 'PHOTO'});
             }}></i>
-          <i className="mdi mdi-camcorder" onClick={() => {
+          {/*<i className="mdi mdi-camcorder" onClick={() => {
               this.setState({type: 'VIDEO'});
-            }}></i>
+            }}></i>*/}
           <i className="mdi mdi-comment-text" onClick={() => {
               this.setState({type: 'MESSAGE'});
             }}></i>
