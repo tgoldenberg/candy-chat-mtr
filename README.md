@@ -11,4 +11,4 @@ An educational chat app using Meteor and React Native for volunteer teaching
 **** 
 
 # Screenshots 
-![Screenshot](https://raw.githubusercontent.com/tgoldenberg/candy-chat-mtr/master/candy-chat1.png)
+![Screenshot](https://raw.githubusercontent.com/tgoldenberg/candy-chat-mtr/master/candy-chat-2.png)
