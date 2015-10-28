@@ -6,6 +6,7 @@ An educational chat app using Meteor and React Native for volunteer teaching
 - Instant real-time text chat
 - upload images via AWS S3
 - choose emoticons from Material Design Icons
+- iOS and Android version in progress
 
 **** 
 
