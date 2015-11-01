@@ -1,3 +1,5 @@
+
+
 class Chat extends React.Component{
   constructor(props){
     super(props);
@@ -55,20 +57,18 @@ class Chat extends React.Component{
                       let preview = React.findDOMNode(this.refs.imageSource);
                       let button = React.findDOMNode(this.refs.uploadButton);
                       let file = files[0];
-                      console.log('FILE', file);
+
+
                       if ( file == null) {
                         alert('NO file selected');
                       } else {
-                        // TODO: upload image to AWS and get URL
-                        AWS.config.update({accessKeyId: Meteor.settings.public.AWS_ACCESS_TOKEN, secretAccessKey: Meteor.settings.public.AWS_SECRET_KEY});
-                        AWS.config.region = 'us-east-1';
-                        var s3 = new AWS.S3({params: {Bucket: 'speakitlanguages'}});
-                        let params = { Key: file.name, ContentType: file.type, Body: file };
-                        s3.upload(params, function(err, data) {
-                          console.log('DATA', data, err);
-                          preview.src = data.Location;
-                          button.innerHTML = file.name;
-                        });
+                        // debugger
+                        // var reader = new FileReader();
+                        // reader.onload = function(fileLoadEvent) {
+                        //   let data = Meteor.call('uploadToAWS', {file: file});
+                        //   preview.src = data.source;
+                        //   button.innerHTML = data.name;
+                        // }
                       }
                     }}/>
                   Upload Image
